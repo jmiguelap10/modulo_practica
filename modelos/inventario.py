@@ -1,4 +1,5 @@
 from modelos.producto import Producto
+from modelos.excepciones import ProductoNoEncontradoError
 
 class Inventario:
     def __init__(self) -> None:
@@ -20,3 +21,11 @@ class Inventario:
         """Calcula el valor monetario total multiplicando precio * stock de cada producto."""
         return sum(p.precio * p.stock for p in self.productos)
     
+    def buscar_producto(self, nombre: str) -> Producto:
+        """Busca un producto por nombre (sin distinguir mayúculas ni espacios extras)."""
+        nombre_normalizado = nombre.strip().lower()
+        for producto in self.productos:
+            if producto.nombre.lower() == nombre_normalizado:
+                return producto
+            
+        raise ProductoNoEncontradoError(F"El producto \"{nombre.strip()}\" no existe en el inventario.")

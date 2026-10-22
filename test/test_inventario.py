@@ -1,6 +1,7 @@
 import pytest
 from modelos.producto import Producto
 from modelos.inventario import Inventario
+from modelos.excepciones import ProductoNoEncontradoError
 
 def test_inventario_vacio():
     inv = Inventario()
@@ -24,4 +25,18 @@ def test_error_agregar_tipo_invalido():
     inv = Inventario()
     with pytest.raises(TypeError, match="Solo se puede agregar instancias de la clase Producto."):
         inv.agregar_producto("Un texto cualquiera.")
+        
+def test_buscar_producto_existente():
+    inv = Inventario()
+    teclado = Producto("Teclado Mecánico", 150000.0, 5)
+    inv.agregar_producto(teclado)
+    
+    encontrado = inv.buscar_producto("teclado mecánico")
+    assert encontrado == teclado
+    assert encontrado.precio == 150000.0
+    
+def test_error_buscar_producto_inexistente():
+    inv = Inventario()
+    with pytest.raises(ProductoNoEncontradoError, match="El producto \"Mouse Gamer\" no existe en el inventario."):
+        inv.buscar_producto("Mouse Gamer")
     
