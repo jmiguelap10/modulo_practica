@@ -1,3 +1,5 @@
+from modelos.excepciones import StockInsuficienteError
+
 class Producto:
     def __init__(self, nombre: str, precio: float, stock: int):
         if not nombre or not nombre.strip():
@@ -37,4 +39,13 @@ class Producto:
         
         descuento = self.precio * (porcentaje / 100)
         self.precio -= descuento
+        
+    def reducir_stock(self, cantidad: int) -> None:
+        """Disminuye el stock físico si hay unidades suficientes."""
+        if cantidad > self.stock:
+            raise StockInsuficienteError(
+                f"Stock insuficiente para \"{self.nombre}\". "
+                f"Disponible: {self.stock}, solicitado: {cantidad}."
+            )
+        self.stock -= cantidad
         

@@ -38,12 +38,5 @@ class Inventario:
             raise ValueError("La cantidad a retirar debe ser mayor a cero.")
         
         producto = self.buscar_producto(nombre)
-        
-        if cantidad > producto.stock:
-            raise StockInsuficienteError(
-                f"Stock insuficiente para \"{producto.nombre}\". "
-                f"Disponible: {producto.stock}, solicitado: {cantidad}."
-            )
-        
-        producto.stock -=cantidad
+        producto.reducir_stock(cantidad)
         
