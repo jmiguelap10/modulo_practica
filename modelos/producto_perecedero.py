@@ -26,3 +26,9 @@ class ProductoPerecedero(Producto):
             return round(self.precio * (1 - porcentaje_descuento / 100))
         return self.precio
     
+    def to_dict(self) -> dict:
+            datos = super().to_dict()
+            datos["tipo"] = "ProductoPerecedero"
+            datos["dias_para_caducar"] = self.dias_para_caducar
+            return datos
+    

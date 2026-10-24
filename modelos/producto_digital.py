@@ -21,3 +21,10 @@ class ProductoDigital(Producto):
     def reducir_stock(self, cantidad: int) -> None:
         """Polimorfismo: un producto digital nunca agota sus existencias."""
         pass
+    
+    def to_dict(self) -> dict:
+            datos = super().to_dict()
+            datos["tipo"] = "ProductoDigital"
+            datos["enlace_descarga"] = self.enlace_descarga
+            return datos
+    

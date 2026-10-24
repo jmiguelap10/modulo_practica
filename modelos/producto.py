@@ -49,3 +49,12 @@ class Producto:
             )
         self.stock -= cantidad
         
+    def to_dict(self) -> dict:
+        """Serializa los atributos base del producto a un diccionario."""
+        return {
+            "tipo": "Producto",
+            "nombre": self.nombre,
+            "precio": self.precio,
+            "stock": self.stock,
+        }
+        
