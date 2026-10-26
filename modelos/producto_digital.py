@@ -23,8 +23,11 @@ class ProductoDigital(Producto):
         pass
     
     def to_dict(self) -> dict:
-            datos = super().to_dict()
-            datos["tipo"] = "ProductoDigital"
-            datos["enlace_descarga"] = self.enlace_descarga
-            return datos
+        """Serializa los atributos de un producto digital."""
+        return {
+            "tipo": "ProductoDigital",
+            "nombre": self.nombre,
+            "precio": self.precio,
+            "enlace_descarga": self.enlace_descarga,
+        }
     

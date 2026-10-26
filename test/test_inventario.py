@@ -1,5 +1,5 @@
 import pytest
-from modelos.producto import Producto
+from modelos.producto_estandar import ProductoEstandar
 from modelos.inventario import Inventario
 from modelos.excepciones import ProductoNoEncontradoError, StockInsuficienteError
 def test_inventario_vacio():
@@ -10,8 +10,8 @@ def test_inventario_vacio():
     
 def test_agregar_productos_y_calcular_totales():
     inv = Inventario()
-    p1 = Producto("Teclado", 100000.0, 2)
-    p2 = Producto("Mouse", 50000.0, 3)
+    p1 = ProductoEstandar("Teclado", 100000.0, 2)
+    p2 = ProductoEstandar("Mouse", 50000.0, 3)
     
     inv.agregar_producto(p1)
     inv.agregar_producto(p2)
@@ -27,7 +27,7 @@ def test_error_agregar_tipo_invalido():
         
 def test_buscar_producto_existente():
     inv = Inventario()
-    teclado = Producto("Teclado Mecánico", 150000.0, 5)
+    teclado = ProductoEstandar("Teclado Mecánico", 150000.0, 5)
     inv.agregar_producto(teclado)
     
     encontrado = inv.buscar_producto("teclado mecánico")
@@ -41,7 +41,7 @@ def test_error_buscar_producto_inexistente():
         
 def tes_retirar_stock_exitoso():
     inv = Inventario()
-    p = Producto("Monitor", 800000.0, 10)
+    p = ProductoEstandar("Monitor", 800000.0, 10)
     inv.agregar_producto(p)
         
     inv.retirar_stock("Monitor", 3)
@@ -49,7 +49,7 @@ def tes_retirar_stock_exitoso():
         
 def test_error_retirar_stock_insuficiente():
     inv = Inventario()
-    p = Producto("Monitor", 800000.0, 5)
+    p = ProductoEstandar("Monitor", 800000.0, 5)
     inv.agregar_producto(p)
     
     with pytest.raises(StockInsuficienteError, match="Stock insuficiente para \"Monitor\". Disponible: 5, solicitado: 8."):
@@ -57,7 +57,7 @@ def test_error_retirar_stock_insuficiente():
         
 def test_error_retirar_cantidad_invalida():
     inv = Inventario()
-    p = Producto("Monitor", 800000, 5)
+    p = ProductoEstandar("Monitor", 800000, 5)
     inv.agregar_producto(p)
     
     with pytest.raises(ValueError, match="La cantidad a retirar debe ser mayor a cero."):

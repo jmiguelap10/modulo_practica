@@ -5,6 +5,7 @@ from modelos.producto_perecedero import ProductoPerecedero
 from modelos.producto_digital import ProductoDigital
 from modelos.excepciones import ProductoNoEncontradoError, StockInsuficienteError
 from persistencia.almacenamiento import AlmacenamientoJSON
+from modelos.producto_estandar import ProductoEstandar
 
 
 def mostrar_menu() -> None:
@@ -39,8 +40,8 @@ def registrar_producto_estandar(inv: Inventario, storage: AlmacenamientoJSON) ->
         precio = float(input("Precio unitario: "))
         stock = int(input("Stock inicial: "))
         
-        nuevo = Producto(nombre, precio, stock)
-        inv.agregar_producto(nuevo)
+        nuevo = ProductoEstandar(nombre, precio, stock)
+        inv.agregar_producto(ProductoEstandar("Monitor 24\"", 750000.0, 8))
         storage.guardar(inv)
         print(f"[OK] Producto \"{nuevo.nombre}\" agregado y guardado en disco.")
     except (ValueError, TypeError) as err:

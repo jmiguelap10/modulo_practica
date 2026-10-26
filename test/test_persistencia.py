@@ -1,9 +1,9 @@
 import pytest
 from modelos.inventario import Inventario
-from modelos.producto import Producto
 from modelos.producto_perecedero import ProductoPerecedero
 from modelos.producto_digital import ProductoDigital
 from persistencia.almacenamiento import AlmacenamientoJSON
+from modelos.producto_estandar import ProductoEstandar
 
 
 def test_guardar_y_cargar_inventario(tmp_path):
@@ -12,7 +12,7 @@ def test_guardar_y_cargar_inventario(tmp_path):
 
     # 1. Crear inventario original con diferentes tipos
     inv_original = Inventario()
-    inv_original.agregar_producto(Producto("Teclado", 150000.0, 10))
+    inv_original.agregar_producto(ProductoEstandar("Teclado", 150000.0, 10))
     inv_original.agregar_producto(ProductoPerecedero("Yogurt", 4000.0, 6, 2))
     inv_original.agregar_producto(ProductoDigital("Curso SQL", 90000.0, "https://cursos.dev/sql"))
 
@@ -27,7 +27,7 @@ def test_guardar_y_cargar_inventario(tmp_path):
     assert len(inv_recuperado.productos) == 3
 
     teclado = inv_recuperado.buscar_producto("Teclado")
-    assert type(teclado) is Producto
+    assert type(teclado) is ProductoEstandar
     assert teclado.stock == 10
 
     yogurt = inv_recuperado.buscar_producto("Yogurt")

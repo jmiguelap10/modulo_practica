@@ -4,23 +4,22 @@ from modelos.inventario import Inventario
 from modelos.producto import Producto
 from modelos.producto_perecedero import ProductoPerecedero
 from modelos.producto_digital import ProductoDigital
+from modelos.producto_estandar import ProductoEstandar
 
 
 def fabricar_producto_desde_dict(datos: dict) -> Producto:
-    """Reconstruye la instancia adecuada según el tipo serializado."""
     tipo = datos.get("tipo")
     nombre = datos["nombre"]
     precio = datos["precio"]
 
-    if tipo == "Producto":
-        return Producto(nombre, precio, datos["stock"])
+    if tipo in ("Producto", "ProductoEstandar"):
+        return ProductoEstandar(nombre, precio, datos["stock"])
     elif tipo == "ProductoPerecedero":
         return ProductoPerecedero(nombre, precio, datos["stock"], datos["dias_para_caducar"])
     elif tipo == "ProductoDigital":
         return ProductoDigital(nombre, precio, datos["enlace_descarga"])
     else:
         raise ValueError(f"Tipo de producto desconocido: {tipo}")
-
 
 class AlmacenamientoJSON:
     def __init__(self, ruta_archivo: str = "inventario.json") -> None:
